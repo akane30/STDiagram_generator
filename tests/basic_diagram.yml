@@ -1,0 +1,38 @@
+# STDiagram diagram config
+Actions:
+    S1_action: &S1_action
+        - blah
+        - blah
+    S2_action: &S2_action
+        - doSomething()
+        - Set value to X
+    S2_action: &S3_action
+        - doSomethingElse()
+        - Reset counter
+    T1_condition: &T1_condition
+        - timer < 5 && X == True
+    T1_condition: &T3_condition
+        - timer < 5 && X == True
+        
+States:
+    STATE1: &STATE1
+        action: *S1_action
+    STATE2: &STATE2
+        action: *S2_action
+    STATE3: &STATE3
+        action: *S3_action
+
+Transitions:
+    T1:
+        condition: *T1_condition
+        start: *STATE1
+        end: *STATE2
+    T2:
+        condition: ""
+        start: *STATE2
+        end: *STATE1
+    T3:
+        condition: *T3_condition
+        start: *STATE2
+        end: *STATE3
+
