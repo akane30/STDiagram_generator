@@ -1,0 +1,54 @@
+digraph ttable {
+    Table [shape=record, label=<
+<table>
+<tr><td>T1</td><td>Auto</td></tr>
+<tr>
+    <td>T2</td>
+    <td> 
+        IV.cam_closed_switch.value\nIV.cam_open_switch_value == BUTTON_RELEASED<br />
+        IV.cam_open_switch.value\nIV.cam_open_switch_value == BUTTON_PRESSED<br />
+        IV.pawl_switch.value\nIV.cam_open_switch_value == BUTTON_RELEASED
+    </td>
+</tr>
+<tr>
+    <td>T3</td><td>IV.pawl_current &lt; MIN_RUNNING_CURRENT_MA </td>
+</tr>
+<tr>
+    <td>T4</td>
+    <td>This is a test <br /> of the emergency <br /> too many lines <br /> system</td>
+</tr>
+<tr>
+    <td>T5</td><td></td>
+</tr>
+<tr>
+    <td>T6</td><td></td
+></tr>
+</table>>];
+}
+
+digraph SM {
+    CP0 [shape=box, style=rounded, label="CP0: ENTER_CLOSE_PAWL"];
+    CP1 [shape=box,label="CP1: VERIFY_INITIAL_CAMS "];
+    CP2 [shape=box, label="CP2: STOP_PAWL_MOTOR"];
+    CP3 [shape=box, label="CP3: MONITOR_CAMS_CLOSED"];
+    CP4 [shape=box, style=rounded, label="CP4: EXIT_CLOSE_PAWL_SUCCESS"];
+    CP5 [shape=box, label="CP5: ERROR_INITIAL_CAM_FAILURE"];
+    CP6 [shape=box, label="CP6: ERROR_MOTOR_FAILURE"];
+    CP7 [shape=box, label="CP7: ERROR_CAM_SWITCH_FAILURE"];
+    CP8 [shape=box, style=rounded, label="CP8: EXIT_CLOSE_PAWL_SYSTEM_FAILURE"];
+
+    CP0 -> CP1 [label="T1: CP0CP1\nAuto"];
+    CP1 -> CP2 [label="T2", fontsize=10, labelfloat=false];
+    CP2 -> CP3 [label="T3: CP2CP3\nIV.pawl_current < MIN_RUNNING_CURRENT_MA", fontsize=10, labeldistance=-5];
+    CP3 -> CP4;
+
+    CP1 -> CP5 [label="T5"];
+    CP2 -> CP6 [label="T7"];
+    CP3 -> CP7 [label="T8"];
+
+    CP5 -> CP6;
+    CP5 -> CP8;
+    CP6 -> CP8;
+    CP7 -> CP8;
+}
+
